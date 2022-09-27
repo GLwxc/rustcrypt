@@ -14,6 +14,12 @@ struct AES256 {
     name: String
 }
 
+impl AES256 {
+    fn new(name: String) -> Self {
+        Self { name: name}
+    }
+}
+
 impl Cypher for AES256 {
     fn name(&self) -> &String {
         &self.name
@@ -22,6 +28,12 @@ impl Cypher for AES256 {
 
 struct PKCS7 {
     name: String
+}
+
+impl PKCS7 {
+    fn new(name: String) -> Self {
+        Self { name: name}
+    }
 }
 
 impl Padder for PKCS7 {
@@ -55,7 +67,26 @@ pub fn select_mode(mode: String) -> Box<dyn Mode> {
     }
 }
 
+pub fn select_cypher(cypher: String) -> Box<dyn Cypher> {
+    match cypher.as_str() {
+        "AES256" => Box::new(AES256::new(cypher)),
+        _     => panic!("error: {} is unknown.", cypher),
+
+    }
+}
+
+
+pub fn select_padder(padder: String) -> Box<dyn Padder> {
+    match padder.as_str() {
+        "PKCS7" => Box::new(PKCS7::new(padder)),
+        _     => panic!("error: {} is unknown.", padder),
+
+    }
+}
+
 fn main() {
     let mode = select_mode(String::from("ECB"));
-    println!("{}",mode.name());
+    let cypher = select_cypher(String::from("AES256"));
+    let padder = select_padder(String::from("PKCS7"));
+    println!("mode: {} cypher: {} padder: {}",mode.name(), cypher.name(), padder.name());
 }
