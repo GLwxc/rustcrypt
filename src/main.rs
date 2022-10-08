@@ -1,63 +1,14 @@
-pub trait Padder {
-    fn name(&self) -> &String;
-}
+mod cypher;
+mod padder;
+mod mode;
 
-pub trait Mode {
-    fn name(&self) -> &String;
-}
+use cypher::Cypher;
+use mode::Mode;
+use padder::Padder;
 
-pub trait Cypher {
-    fn name(&self) -> &String;
-}
-
-struct AES256 {
-    name: String
-}
-
-impl AES256 {
-    fn new(name: String) -> Self {
-        Self { name: name}
-    }
-}
-
-impl Cypher for AES256 {
-    fn name(&self) -> &String {
-        &self.name
-    }
-}
-
-struct PKCS7 {
-    name: String
-}
-
-impl PKCS7 {
-    fn new(name: String) -> Self {
-        Self { name: name}
-    }
-}
-
-impl Padder for PKCS7 {
-    fn name(&self) -> &String {
-        &self.name
-    }
-}
-
-struct ECB {
-    name: String
-}
-
-
-impl ECB {
-    fn new(name: String) -> Self {
-        Self { name: name}
-    }
-}
-
-impl Mode for ECB {
-    fn name(&self) -> &String {
-        &self.name
-    }
-}
+use crate::mode::ecb::ECB;
+use crate::cypher::aes256::AES256;
+use crate::padder::pkcs7::PKCS7;
 
 pub fn select_mode(mode: String) -> Box<dyn Mode> {
     match mode.as_str() {
@@ -84,9 +35,20 @@ pub fn select_padder(padder: String) -> Box<dyn Padder> {
     }
 }
 
+pub fn encrypt(path: &String, mode: &Box<dyn Mode>, cypher: &Box<dyn Cypher>, padder: &Box<dyn Padder>) {
+    println!("In encrypt -> path: {} mode: {} cypher: {} padder: {}", path, mode.name(), cypher.name(), padder.name());
+}
+
+
+pub fn decrypt(path: &String, mode: &Box<dyn Mode>, cypher: &Box<dyn Cypher>, padder: &Box<dyn Padder>) {
+    println!("In decrypt -> path: {} mode: {} cypher: {} padder: {}", path, mode.name(), cypher.name(), padder.name());
+}
+
 fn main() {
     let mode = select_mode(String::from("ECB"));
     let cypher = select_cypher(String::from("AES256"));
     let padder = select_padder(String::from("PKCS7"));
-    println!("mode: {} cypher: {} padder: {}",mode.name(), cypher.name(), padder.name());
+    let path = String::from("/path/to/something");
+    encrypt(&path, &mode, &cypher, &padder);
+    decrypt(&path, &mode, &cypher, &padder);
 }
