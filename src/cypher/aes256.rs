@@ -1,4 +1,4 @@
-use crate::Cypher;
+use crate::cypher::Cypher;
 
 pub struct AES256 {
     name: String

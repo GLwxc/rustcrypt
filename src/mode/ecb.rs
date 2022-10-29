@@ -1,4 +1,4 @@
-use crate::Mode;
+use crate::mode::Mode;
 
 pub struct ECB {
     name: String
