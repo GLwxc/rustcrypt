@@ -9,5 +9,9 @@ pub fn encrypt(arg_parser: &ArgParser) {
     let cypher = select_cypher(&arg_parser.cypher);
     let padder = select_padder(&arg_parser.padder);
     let file_path = &arg_parser.file_path;
-    println!("In encrypt -> path: {} mode: {} cypher: {} padder: {}", file_path, mode.name(), cypher.name(), padder.name());
+    let key_path = &arg_parser.key_path;
+    mode.apply(&cypher,
+               &padder,
+               file_path,
+               key_path);
 }
