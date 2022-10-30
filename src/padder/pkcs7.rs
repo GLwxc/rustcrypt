@@ -14,4 +14,7 @@ impl Padder for PKCS7 {
     fn name(&self) -> &String {
         &self.name
     }
+    fn apply(&self) {
+        println!("In apply from padder pkcs7");
+    }
 }
