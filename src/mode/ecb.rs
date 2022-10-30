@@ -27,6 +27,7 @@ impl Mode for ECB {
              key_path,
              cypher.name(),
              padder.name());
-
+    padder.apply();
+    cypher.apply();
     }
 }
