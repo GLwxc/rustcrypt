@@ -14,4 +14,7 @@ impl Cypher for AES256 {
     fn name(&self) -> &String {
         &self.name
     }
+    fn apply(&self) {
+        println!("In apply from cypher aes256");
+    }
 }
