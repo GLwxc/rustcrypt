@@ -1,0 +1,14 @@
+########################################################
+Mini encryption/decryption util
+
+WARNING: Not safe to use for real cryptography use cases
+########################################################
+
+
+TODO:
+
+1 - Overall app architecture
+2 - Implement ecb encryption mode
+3 - Implement pkcs7 compliant padding
+4 - Implement aes256 cypher
+5 - Implement any algorithms I want to implement :)
